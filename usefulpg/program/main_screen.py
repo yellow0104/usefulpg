@@ -1,6 +1,11 @@
 import tkinter as tk
-from tkinter import Menu, ttk
+from tkinter import Button, Menu, ttk
 import os
+
+import webview
+
+import requests
+from bs4 import BeautifulSoup
 
 win = tk.Tk()
 win.geometry("700x500+500+300")
@@ -32,13 +37,63 @@ def eng():
             print(language)
         win.destroy()
         os.system('py usefulpg\program\main_screen.py')
-
+        
 
 
 
 
 text_1 = ['설정', 'setting']
 text_2 = ['언어', 'language']
+text_3 = ['뉴스', 'news']
+
+def bt1_news():
+    window = webview.create_window(f'{one}', link_list[one])
+    webview.start()
+def bt2_news():
+    window = webview.create_window(f'{two}', link_list[two])
+    webview.start()
+
+res = requests.get('https://m.news.naver.com/main?mode=LSD&sid1=100')
+soup = BeautifulSoup(res.text, 'lxml')
+text = soup.find_all('strong', attrs={'class':"sh_text_headline"})
+links = soup.find_all('a', attrs={'class':'sh_thumb_link'})
+
+link_list = {}
+one = ''
+two = ''
+one2 = ''
+two2 = ''
+for link in links:
+        l = link['href']
+        if one2 == '':
+            one2 += l
+        else:
+            two2 += l
+
+for title in text:
+    
+        
+    t = title.get_text()
+    
+    if one == '':
+        one += t
+        
+    else:
+        two += t
+    link_list[one] = one2
+    link_list[two] = two2
+    
+print(link_list) 
+one_bt = tk.Button(text=one, command=bt1_news, padx=10, pady=2)
+two_bt = tk.Button(text=two, command=bt2_news, padx=10, pady=2)
+label_title = tk.Label(text=text_3[language])
+label_title.grid(column=0, row=0)
+
+one_bt.grid(column=0, row=2)
+two_bt.grid(column=0, row=3)
+
+
+
 
 
 menubar = tk.Menu(win)
