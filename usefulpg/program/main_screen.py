@@ -8,7 +8,6 @@ import requests
 from bs4 import BeautifulSoup
 
 win = tk.Tk()
-win.geometry("700x500+500+300")
 win.resizable(False, False)
 
 with open('usefulpg\\txt_zip\\language_setting.txt', 'r', encoding='utf-8') as f:
@@ -87,7 +86,9 @@ print(link_list)
 one_bt = tk.Button(text=one, command=bt1_news, padx=10, pady=2)
 two_bt = tk.Button(text=two, command=bt2_news, padx=10, pady=2)
 label_title = tk.Label(text=text_3[language])
-label_title.grid(column=0, row=0)
+label_title.grid(column=0, row=1)
+label_main_title = tk.Label(text=f"{user_name} hello!")
+label_main_title.grid(column=0, row=0)
 
 one_bt.grid(column=0, row=2)
 two_bt.grid(column=0, row=3)
