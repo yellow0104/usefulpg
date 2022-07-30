@@ -35,8 +35,13 @@ def eng():
             f.write('1')
             print(language)
         win.destroy()
-        os.system('py usefulpg\program\main_screen.py')
+        os.system('py usefulpg/program/main_screen.py')
         
+def counting_letters():
+    os.system('py usefulpg/program/len.py')
+
+def sound_player():
+    os.system('py usefulpg/program/main_sound.py')
 
 
 
@@ -44,6 +49,9 @@ def eng():
 text_1 = ['설정', 'setting']
 text_2 = ['언어', 'language']
 text_3 = ['뉴스', 'news']
+text_4 = ['열기', 'open']
+text_5 = ['글자수세기', 'counting letters']
+text_6 = ['음악플레이어', 'sound player']
 
 def bt1_news():
     window = webview.create_window(f'{one}', link_list[one])
@@ -87,7 +95,7 @@ one_bt = tk.Button(text=one, command=bt1_news, padx=10, pady=2)
 two_bt = tk.Button(text=two, command=bt2_news, padx=10, pady=2)
 label_title = tk.Label(text=text_3[language])
 label_title.grid(column=0, row=1)
-label_main_title = tk.Label(text=f"{user_name} hello!")
+label_main_title = tk.Label(text=f"{user_name}")
 label_main_title.grid(column=0, row=0)
 
 one_bt.grid(column=0, row=2)
@@ -104,6 +112,12 @@ menu2 = tk.Menu(menu1, tearoff=0)
 menu2.add_radiobutton(label='한국어', command=kor)
 menu2.add_radiobutton(label='english', command=eng)
 menu1.add_cascade(menu=menu2, label=text_2[language])
+
+menu3 = tk.Menu(menubar, tearoff=0)
+menu3.add_command(label=text_5[language], command=counting_letters)
+menu3.add_command(label=text_6[language], command=sound_player)
+menubar.add_cascade(menu=menu3, label=text_4[language])
+
 
 win.config(menu=menubar)
 
