@@ -7,6 +7,8 @@ import os
 
 
 
+
+
 win = tk.Tk()
 win.resizable(False, False)
 win.title('music player')
@@ -19,6 +21,7 @@ listbox.pack()
 
 
 
+add_or_del = False
 
 
 label_frame = tk.LabelFrame(text='music player')
@@ -32,15 +35,22 @@ else:
     int_tuple = list_tuple[0]
 def listen_music():
 
-    global click_counter,list_tuple,int_tuple
+    global click_counter,list_tuple,int_tuple,add_or_del
     print(click_counter)
     
+
     list_tuple = list(listbox.curselection())
     if list_tuple == []:
         int_tuple = 0
     else:
-        int_tuple = list_tuple[0]
+        if add_or_del == False:
+            int_tuple = list_tuple[0]
+        elif add_or_del == True:
+            print('int_tuple:' + str(int_tuple))
+            add_or_del = False
+            pass
 
+    
     click_counter += 1
     list_listbox = listbox.get(0, END)
 
@@ -91,23 +101,29 @@ def delete_music():
     os.remove('usefulpg/sound_zip/' + file_list[int_tuple2])
     importcommand()
 
+
 def add_int_tuple():
-    global int_tuple
+    global int_tuple, add_or_del 
     print(int_tuple)
     print('size:' + str(listbox.size()))
-    if listbox.size() > int_tuple + 1:
+    if listbox.size() > int_tuple+1:
         print('h')
+
         int_tuple += 1
+        print(int_tuple)
         listen_music()
+        add_or_del = True
+        
     else:
         print('f')
 def del_int_tuple():
-    global int_tuple
+    global int_tuple, add_or_del
     print(int_tuple)
     if int_tuple > 0:
         print('i')
         int_tuple -= 1
         listen_music()
+        add_or_del = True
     else:
         print('f')
 
